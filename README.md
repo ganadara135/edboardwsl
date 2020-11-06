@@ -16,8 +16,9 @@
 # yarn 
 1. yarn version 1.22.4 에서 개발됨
 > yarn set version 1.22.4
-1. 모듈 충돌문제
-1. duplicate module 문제
+2. 모듈 충돌문제
+3. duplicate module 문제
+
 ~~~{                                                  <br>
    yarn clean cache                                <br>
    npm -rf node_modules                               <br>
@@ -33,8 +34,8 @@
    yarn install                                       <br>
 }~~~
 
-1. yarn list "모듈명"     모듈 관련 목록을 보여줌
-1. resolutions 을 활용, 
+4. yarn list "모듈명"     모듈 관련 목록을 보여줌
+5. resolutions 을 활용, 
 
 
 # 소스코드 위치
