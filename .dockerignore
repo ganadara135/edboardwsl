@@ -1,0 +1,27 @@
+*
+!./package.json
+!./packages/server/package.json 
+!./packages/common/package.json
+!./packages/server/dist/
+!./packages/common/dist/
+!./packages/server/.env.prod
+!./packages/server/.env.example
+!./ormconfig.json
+!./packages/web/
+!./packages/web/build/
+
+!./packages/server/.env.development
+!./packages/server/.env.production
+!./packages/web/.env.production
+!./packages/web/.env
+
+!./packages/
+!./.env.local
+!./.env.prod
+
+# for development
+!./packages/
+!./node_modules/
+!./.env
+!./tslint.json
+!./yarn.lock

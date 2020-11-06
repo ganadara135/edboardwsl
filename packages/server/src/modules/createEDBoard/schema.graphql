@@ -1,0 +1,11 @@
+type Mutation {
+  createEDBoard(
+    name: String!,
+    description: String!
+  ): IErrorReponse
+}
+
+
+type Query {
+  edboardQuery: [EDBoard],
+}

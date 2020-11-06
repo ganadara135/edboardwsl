@@ -1,0 +1,82 @@
+type Mutation {
+  createEDBoard(name: String!, description: String!): IErrorReponse
+  editYear(y_id: ID!, year: Int, goal: Int, description: String): IErrorReponse
+  editMonth(m_id: ID!, month: Int, goal: Int, description: String, y_id: ID, year: Int): IErrorReponse
+  insertMonth(month: Int!, goal: Int!, yearName: Int!, description: String): IErrorReponse
+  insertYear(edboardName: String!, yeargoals: YearGoalInput): IErrorReponse
+}
+
+type Query {
+  edboardQuery: [EDBoard]
+  getMonthQuery(m_id: ID!): MonthGoal
+  getYearQuery(y_id: ID!): YearGoal
+  monthGoalQuery: [MonthGoal]
+  yearGoalQuery: [YearGoal]
+  yearGoalDeepQuery: [YearToMonthMN]
+  # listEDboardQuery(): [String]  # 위 방식은 에러 발생
+  listEDboardQuery: [String]
+  listYearQuery(yearName: Int, boardName: String): [Int]
+  viewListing(yearName: Int!, boardName: String!): ListingOrdered
+  viewListingMN(yearName: Int!): ListingMN
+}
+
+input YearGoalInput {
+  year: Int
+  goal: Int
+  description: String
+}
+
+type IErrorReponse {
+  ok: Boolean
+  path: String
+  message: String
+}
+
+type EDBoard {
+  id: ID!
+  name: String!
+  description: String!
+  yeargoals: [YearGoal]
+}
+
+type YearGoal {
+  id: ID!
+  year: Int!
+  goal: Int!
+  description: String
+  ymmns: [YearToMonthMN]
+  edboard: EDBoard
+}
+
+type YearToMonthMN {
+  id: ID
+  ygid: YearGoal
+  mgid: MonthGoal
+  description: String
+}
+
+type MonthGoal {
+  id: ID!
+  month: Int!
+  goal: Float!
+  description: String
+  ymmns: [YearToMonthMN!]
+}
+
+# 중요, 객체형이 아닌 순수 데이터로 받기
+scalar raw
+
+type ListingOrdered {
+  ordered: [raw]
+}
+
+type ListingMN {
+  mnInfo: [YearToMonthMN]
+  monthInfo: [MonthGoal]
+  yearInfo: [YearGoal]
+}
+
+type Error {
+  path: String!
+  message: String!
+}

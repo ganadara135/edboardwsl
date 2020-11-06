@@ -1,0 +1,141 @@
+version: "3.6"
+services:
+    redis:
+        container_name: redis
+        hostname: redis
+        image: "redis"
+        networks:
+            - abb-net
+        ports:
+            - 6379:6379
+        
+    rdb:        
+        container_name: rdb
+        #hostname: ${TYPEORM_HOST}
+        hostname: rdb
+        image: mysql:8.0
+        # image: mysql:8.0.17
+        # image: mariadb:10.5
+        # image: 'bitnami/mariadb:latest'
+        volumes:
+            # - ~/work/energy/crud/edboard/dockerCompose/mariaDB_cnf:/opt/bitnami/mariadb/conf/
+            # - rdb-data:/bitnami/mariadb/data
+            # - ~/work/energy/crud/edboard/dockerCompose/mysqlDB_cnf:/etc/mysql/conf.d  # mac version
+            - /home/ubuntu/work/edboardwsl/dockerCompose/mysqlDB_cnf:/etc/mysql/conf.d  # wsl version  # bind mount
+            - rdb-data:/var/lib/mysql     # aaa                                                   # mount
+        networks:
+            - abb-net
+        ports:
+            - 3306:3306
+        env_file:
+            - ../.env
+        environment:
+            # - ALLOW_EMPTY_PASSWORD=yes
+            # - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            # - MARIADB_USER=${TYPEORM_USERNAME}
+            # - MARIADB_PASSWORD=${TYPEORM_PASSWORD}
+            # - MARIADB_DATABASE=${TYPEORM_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${TYPEORM_USERNAME}
+            - MYSQL_PASSWORD=${TYPEORM_PASSWORD}
+            - MYSQL_DATABASE=${TYPEORM_DATABASE}
+            - TZ=Asia/Seoul
+            # - MYSQL_ROOT_HOST=%
+            # - MYSQL_ALLOW_EMPTY_PASSWORD=1
+        command: --default-authentication-plugin=mysql_native_password
+            # --init-connect=${FOR _EMPTY_STR}    this is for Mac, Linux is different
+        # command: mysqld --init-connect=${FOR_EMPTY_STR} --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        # command: ["mysqld", "--init-connect=SET NAMES UTF8mb4;", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+        #     command: # 명령어 실행
+        #   - --character-set-server=utf8mb4
+        #   - --collation-server=utf8mb4_unicode_ci
+    
+    # adminer:
+    #     container_name: adminer
+    #     image: adminer
+    #     ports:
+    #         - 33306:8080
+    #     depends_on:
+    #         - rdb
+    #     environment:
+    #         - ADMINER_DEFAULT_SERVER:rdb
+    phpmyadmin:
+        container_name: phpmyadmin
+        hostname: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        # restart: always
+        ports:
+            - 33306:80
+        networks:
+            - abb-net
+        depends_on:
+            - rdb
+        env_file:
+            - ../.env
+        environment:
+            - PMA_ARBITRARY=1
+            # - PMA_USER=mysql
+            # - PMA_PASSWORD=mysql
+            - PMA_HOST=127.0.0.1
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${TYPEORM_DATABASE}
+        
+    backend:
+        container_name: backend
+        hostname: backend
+        build:      # --build 옵션 줄때만 작동
+            context: ../
+            dockerfile: ./dockerCompose/Dockerfile.back.local.compose
+            args:
+                - "NODE_ENV=${NODE_ENV}"
+        image: kcod/abbback:latest
+        # restart: always   # systemd 에 서비스 등록해서 해결
+        ports:
+            - ${SERVER_PORT}:${SERVER_PORT}
+        networks:
+            - abb-net
+        env_file:
+            - ../.env
+        environment:
+            # - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@rdb:5432/${POSTGRES_DB}
+            - REDIS_HOST=redis
+            - FRONTEND_HOST=${FRONTEND_HOST}
+            - PORT=${SERVER_PORT}
+            - NODE_ENV=${NODE_ENV}
+            # - WAIT_HOSTS=rdb:5432     # postgres
+            - WAIT_HOSTS=rdb:3306       # mysql     # wait program 설정
+            # - WAIT_HOSTS=rdb
+            - WAIT_HOSTS_TIMEOUT=300
+            - WAIT_SLEEP_INTERVAL=30
+            - WAIT_HOSTS_CONNECT_TIMEOUT=30
+            - WAIT_BEFORE_HOSTS=10
+            
+            - TYPEORM_USERNAME=${TYPEORM_USERNAME}          # .env 파일과 server 파일의 위치가 달라서 직접 넣어줌()
+            - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}          # 여기에 입력해 줘야 rdb 로 넘겨줌
+            - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+            - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+            - TYPEORM_HOST=${TYPEORM_HOST}
+
+            - FOR_EMPTY_STR='SET NAMES UTF8mb4'               
+        depends_on:
+            - redis
+            - rdb
+        volumes:
+            - /home/ubuntu/work/edboardwsl/:/abb/
+        command:
+            - /bin/bash
+            - -c 
+            - "/usr/wait-for-it.sh --timeout=0 rdb:3306 && yarn start"
+            # - "/wait && exec ls ./packages/server/dist     # 2개 이상은 안됨
+            # - "/wait && yarn start"                        # 내부에 yarn 설치 안돼있음
+            # - "/wait && nodemon --exec ts-node --files=true src/index.ts"
+            # - sh -c "/wait "
+            # && node ./packages/server/dist/index.js"
+    
+
+volumes:
+    rdb-data:
+        name: rdb-data
+networks:
+    abb-net:
+        name: abb-net

@@ -1,0 +1,36 @@
+type IErrorReponse {
+  ok: Boolean
+  path: String
+  message: String
+}
+
+type EDBoard {
+  id: ID!,
+  name: String!,
+  description: String!,
+  yeargoals: [YearGoal],
+}
+
+type YearGoal {
+  id: ID!
+  year: Int!
+  goal: Int!
+  description: String
+  ymmns: [YearToMonthMN],
+  edboard: EDBoard
+}
+
+type YearToMonthMN {
+  id: ID,
+  ygid: YearGoal,
+  mgid: MonthGoal,
+  description: String,
+}
+
+type MonthGoal {
+  id: ID!,
+  month: Int!,
+  goal: Float!,
+  description: String,
+  ymmns: [YearToMonthMN!]
+}

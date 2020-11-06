@@ -1,0 +1,40 @@
+[
+  {
+    "name": "production",
+    "type": "postgres",
+    "host": "rdb",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "graphql-ts-server-boilerplate",
+    "synchronize": true,
+    "logging": true,
+    "entities": [ "packages/server/src/entity/**/*.ts"],
+    "migrations": ["packages/server/src/migration/**/*.ts"],
+    "subscribers": ["packages/server/src/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "packages/server/src/entity",
+      "migrationsDir": "packages/server/src/migration",
+      "subscribersDir": "packages/server/src/subscriber"
+    }
+  },
+  {
+    "name": "development",
+    "type": "postgres",
+    "host": "rdb",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "graphql-ts-server-boilerplate",
+    "synchronize": true,
+    "logging": true,
+    "entities": [ "packages/server/src/entity/**/*.ts"],
+    "migrations": ["packages/server/src/migration/**/*.ts"],
+    "subscribers": ["packages/server/src/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "packages/server/src/entity",
+      "migrationsDir": "packages/server/src/migration",
+      "subscribersDir": "packages/server/src/subscriber"
+    }
+  }
+]

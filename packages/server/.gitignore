@@ -1,0 +1,7 @@
+.idea/
+.vscode/
+node_modules/
+temp/
+*.log
+dump.rdb
+.env

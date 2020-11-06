@@ -1,0 +1,58 @@
+FROM node:12.16-alpine
+
+# we might accidentally overwrite existing folders of the base image.
+# this is a container directory
+WORKDIR /abb
+
+
+#Copy the dependencies file
+# COPY ./package.json ./
+# COPY ./packages/server/package.json ./packages/server/
+# COPY ./packages/common/package.json ./packages/common/
+
+# # RUN npm i -g yarn 999   # node 13 버전은 yarn 사전 탑재됨
+# RUN yarn install
+
+# COPY ./ ./
+COPY ./package.json ./
+COPY ./packages/server/package.json ./packages/server/
+COPY ./packages/common/package.json ./packages/common/
+COPY ./packages/controller/package.json ./packages/controller/
+ARG NODE_ENV
+RUN yarn install --${NODE_ENV}
+
+
+
+
+# 이건 현재 의미 있없음 루트 쪽 .env 로 다 옮김
+# COPY ./packages/server/.env.production ./packages/server/.env       
+COPY ./packages/common/dist/ ./packages/common/dist/
+COPY ./packages/controller/dist/ ./packages/controller/dist/
+COPY ./packages/server/dist ./packages/server/dist
+
+
+# TypeORM 설정 관련 
+# COPY ./ormconfig.json ./
+
+# .env 파일은 copy 안됨
+# COPY ./.env.prod ./.env
+# RUN yarn build:back           
+WORKDIR /abb/packages/server/
+
+# for myTypes.d.ts move dist folder
+# RUN yarn build           
+
+
+# ENV WAIT_VERSION 2.7.2
+# ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+# RUN chmod +x /wait
+
+#  인터넷 연결 안된 상태에서 작동하게 수정
+COPY ./packages/wait-for-it.sh /usr/wait-for-it.sh
+RUN chmod +x /usr/wait-for-it.sh
+RUN apk add --update bash
+
+# 컨테이너 위치 변경
+# WORKDIR /app/packages/server/
+
+

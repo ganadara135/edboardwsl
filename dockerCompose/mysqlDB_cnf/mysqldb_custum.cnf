@@ -1,0 +1,16 @@
+[client]
+port = 3306
+default-character-set=UTF8mb4
+
+[mysqld]
+#bind-address=127.0.0.1
+bind-address=0.0.0.0
+#bind-address=::
+key_buffer_size = 512M
+innodb_buffer_pool_size = 512M
+init_connect = "SET NAMES UTF8mb4"
+character-set-server = UTF8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql] 
+default-character-set = UTF8mb4

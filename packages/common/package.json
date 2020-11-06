@@ -1,0 +1,32 @@
+{
+    "name": "@abb/common",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "license": "MIT",
+    "scripts": {
+        "build": "npx rimraf ./dist && npx tsc"
+    },
+    "devDependencies": {
+        "@types/yup": "^0.26.32",
+        "rimraf": "^3.0.2",
+        "tslint": "^6.1.1",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.8.3"
+    },
+    "dependencies": {
+        "yup": "^0.28.1"
+    },
+    "private": true,
+    "workspaces": {
+        "nohoist": [
+            "**/yup",
+            "**/yup/**",
+            "**/rimraf",
+            "**/rimraf/**",
+            "**/typescript",
+            "**/typescript/**",
+            "**/tslint"
+        ]
+    }
+}

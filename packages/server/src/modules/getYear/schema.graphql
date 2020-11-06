@@ -1,0 +1,3 @@
+type Query {
+  getYearQuery(y_id: ID!): YearGoal
+}

@@ -1,0 +1,93 @@
+version: "3.6"
+services:
+    redis:
+        image: "redis"
+        networks:
+            - abb-net
+        ports:
+            - 6379:6379
+        container_name: redis
+        
+    rdb:
+        container_name: rdb
+        image: mysql:8.0
+        volumes:
+            - /root/mysqlDB_cnf:/etc/mysql/conf.d
+            - rdb-data:/var/lib/mysql
+        networks:
+            - abb-net
+        ports:
+            - 3306:3306
+        env_file:
+            - .env
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${TYPEORM_USERNAME}
+            - MYSQL_PASSWORD=${TYPEORM_PASSWORD}
+            - MYSQL_DATABASE=${TYPEORM_DATABASE}
+            - TZ=Asia/Seoul
+            # --init-connect=SET\ NAMES\ UTF8mb4   this is for linux, Mac is   - FOR_EMPTY_STR=${FOR_EMPTY_STR}
+        command: --default-authentication-plugin=mysql_native_password
+        # command: mysqld --init-connect=SET\ NAMES\ UTF8mb4 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 33306:80
+        networks:
+            - abb-net
+        depends_on:
+            - rdb
+        env_file:
+            - .env
+        environment:
+            - PMA_ARBITRARY=1
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+    backend:
+        container_name: backend
+        # build: 
+        #     context: ../
+        #     dockerfile: ./dockerCompose/Dockerfile.server.prod.compose
+        #     args: 
+        #         - NODE_ENV=${NODE_ENV}
+        image: ganadara135/abbback:latest
+        ports:
+            - ${SERVER_PORT}:${SERVER_PORT}
+        networks:
+            - abb-net
+        env_file:
+            - .env
+        environment:
+            - REDIS_HOST=redis
+            - FRONTEND_HOST=${FRONTEND_HOST}
+            - PORT=${SERVER_PORT}
+            - NODE_ENV=${NODE_ENV}
+            # - WAIT_HOSTS=rdb:5432     # postgres
+            - WAIT_HOSTS=rdb:3306       # mysql     # wait program 설정
+            - WAIT_HOSTS_TIMEOUT=300
+            - WAIT_SLEEP_INTERVAL=30
+            - WAIT_HOSTS_CONNECT_TIMEOUT=30
+            
+            - TYPEORM_USERNAME=${TYPEORM_USERNAME}          # .env 파일과 server 파일의 위치가 달라서 직접 넣어줌()
+            - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}          # 여기에 입력해 줘야 rdb 로 넘겨줌
+            - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+            - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+            - TYPEORM_HOST=${TYPEORM_HOST}
+            # - FOR_EMPTY_STR=${FOR_EMPTY_STR}
+        # command: sh -c "/wait && node dist/index.js"
+        depends_on:
+            - redis
+            - rdb
+        command:
+            - /bin/sh
+            - -c 
+            - "/wait && node packages/server/dist/index.js"
+        
+volumes:
+    rdb-data:
+        name: rdb-data
+networks:
+    abb-net:
+        name: abb-net

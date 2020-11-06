@@ -1,0 +1,4 @@
+{
+    "typescript.tsdk": "/home/ubuntu/work/edboardwsl/node_modules/typescript/lib",
+    "remote.WSL.fileWatcher.polling": true
+}

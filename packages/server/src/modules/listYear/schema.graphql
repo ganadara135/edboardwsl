@@ -1,0 +1,3 @@
+type Query {
+  listYearQuery(yearName: Int, boardName: String): [Int]
+}

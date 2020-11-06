@@ -1,0 +1,3 @@
+type Query {
+  getMonthQuery(m_id: ID!): MonthGoal
+}

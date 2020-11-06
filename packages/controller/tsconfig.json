@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "ESNext",
+    "lib": [
+      "es6",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+
+    
+    "types": [
+
+      "node",
+      "react",
+      "react-dom",
+      "react-router-dom"
+    ],
+    "skipLibCheck": true,
+    "declaration": true,
+  },
+  
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest"
+  ]
+}

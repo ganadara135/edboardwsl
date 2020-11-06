@@ -1,0 +1,4 @@
+type Query {
+  # listEDboardQuery(): [String]  # 위 방식은 에러 발생
+  listEDboardQuery: [String]
+}

@@ -1,0 +1,9 @@
+type Query {
+  viewListingMN(yearName: Int!): ListingMN
+}
+
+type ListingMN {
+  mnInfo: [YearToMonthMN],
+  monthInfo: [MonthGoal],
+  yearInfo: [YearGoal]
+}

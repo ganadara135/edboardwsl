@@ -1,0 +1,11 @@
+type Query {
+  viewListing(yearName: Int!, boardName: String!): ListingOrdered
+}
+
+
+# 중요, 객체형이 아닌 순수 데이터로 받기
+scalar raw      
+
+type ListingOrdered {
+  ordered: [raw],   # 중요
+}

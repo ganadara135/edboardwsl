@@ -1,0 +1,21 @@
+[
+  {
+    "name": "default",
+    "type": "mariadb",
+
+    "username": "mysql",
+    "password": "mysql",
+    "database": "database",
+    "synchronize": false,
+    "logging": true,
+    "entities": [ "src/entity/**/*.ts"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    },
+    "charset": "utf8mb4_unicode_ci"
+  }
+]

@@ -1,0 +1,41 @@
+FROM node:12.16-alpine
+
+# set working directory
+WORKDIR /abb
+
+ARG REACT_APP_SERVER_URL
+ARG SERVER_PORT
+RUN echo "REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL}"+':'+"${SERVER_PORT}"
+
+
+# add `/abb/node_modules/.bin` to $PATH
+ENV PATH /abb/web/node_modules/.bin:$PATH
+
+# install app dependencies
+# COPY ./package.json ./
+# COPY ./packages/web/package.json ./packages/web/
+# COPY ./packages/common/package.json ./packages/common/
+# COPY ./packages/controller/package.json ./packages/controller/
+
+# RUN ls
+# RUN yarn install
+# RUN yarn add react-scripts@3.4.1 -g --silent
+# RUN npm install react-scripts@3.4.1
+
+# add app
+# COPY ./packages/web/ ./packages/web/
+# COPY ./packages/common/dist/ ./packages/common/dist/
+# COPY ./packages/controller/dist/ ./packages/controller/dist/
+
+
+WORKDIR /abb/packages/web/
+
+# .env 파일은 copy 안됨
+# COPY ./.env ./.env
+
+# start app
+# CMD ["yarn", "start"]
+
+
+# COPY ./packages/web/build/ /usr/share/nginx/html
+# COPY ./packages/web/nginx_conf/default.conf /etc/nginx/conf.d/default.conf

@@ -1,0 +1,70 @@
+version: "3"
+services:
+    redis:
+        image: "redis"
+        networks:
+            - net-abb
+        container_name: redis
+        ports:
+            - 6379:6379
+        
+    rdb:
+        container_name: rdb
+        image: mariadb:10.5
+        # image: mysql:8.0.20
+        volumes:
+            - rdb-data:/var/lib/mysql
+        networks:
+            - net-abb
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - TZ=Asia/Seoul
+            # - MYSQL_INITDB_SKIP_TZINFO=1
+        # command: --default-authentication-plugin=mysql_native_password
+        
+
+    backend:
+        container_name: backend
+        image: ganadara135/abbback:latest
+        ports:
+            - 4000:4000
+        networks:
+            - net-abb
+        environment:
+            # - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@rdb:5432/${POSTGRES_DB}
+            - REDIS_HOST=redis
+            - NODE_ENV=${NODE_ENV}
+            - PORT=${PORT}
+            - FRONTEND_HOST=${FRONTEND_HOST}
+            - WAIT_HOSTS=rdb:3306       # mysql
+            - WAIT_HOSTS_TIMEOUT=300
+            - WAIT_SLEEP_INTERVAL=30
+            - WAIT_HOSTS_CONNECT_TIMEOUT=30
+        # command: sh -c "/wait && node dist/index.js"
+        depends_on:
+            - redis
+            - rdb
+        # command:   
+        # - /bin/sh
+        # - -c 
+        # - "/wait && node ./packages/server/dist/index.js" 
+    
+    frontend:
+        image: ganadara135/abbfront:latest
+        ports:
+            - 80:80
+        networks:
+            - net-abb
+        depends_on:
+            - backend 
+        container_name: frontend
+
+volumes:
+    rdb-data:
+networks:
+    net-abb:

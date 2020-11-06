@@ -1,0 +1,16 @@
+type Mutation {
+  insertMonth(
+    month: Int!,
+    goal: Int!,
+    yearName: Int!,
+    description: String,
+  ): IErrorReponse
+}
+
+# scalar Date
+
+
+
+type Query {
+  monthGoalQuery: [MonthGoal],
+}

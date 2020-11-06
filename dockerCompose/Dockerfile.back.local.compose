@@ -1,0 +1,51 @@
+FROM node:12.16-alpine
+
+# docker clean cache 방법
+# docker system prune -a
+
+# we might accidentally overwrite existing folders of the base image.
+# this is a container directory
+WORKDIR /abb
+
+# 이것은 dockerignore 영향 안 받음 # docker-compose 에서 Volume 연결
+# COPY ./ ./   bind mount 연결로 대체
+# COPY ./package.json ./
+# COPY ./packages/server/package.json ./packages/server/
+# COPY ./packages/common/package.json ./packages/common/
+# COPY ./packages/controller/package.json ./packages/controller/
+# # COPY ./packages/server/ ./packages/server/
+# # COPY ./packages/common/ ./packages/common/
+# # COPY ./packages/controller/ ./packages/controller/
+# # COPY ./db-data/ ./
+# # COPY ./.env ./
+# COPY ./packages/common/tsconfig.json ./packages/common/
+# COPY ./packages/controller/tsconfig.json ./packages/controller/
+# COPY ./packages/server/tslint.json ./packages/server/
+# COPY ./packages/server/tsconfig.json ./packages/server/
+# COPY ./tslint.json ./
+# COPY ./yarn.lock ./
+
+## 내 로컬 PC 의 설치 파일들을 리눅스 alpine 로 맞춰줌 
+ARG NODE_ENV
+# RUN yarn install
+
+#  인터넷 연결 안된 상태에서 작동 안함
+# ENV WAIT_VERSION 2.7.2
+# ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+# RUN chmod +x /wait
+
+#  인터넷 연결 안된 상태에서 작동하게 수정
+# RUN apk add --update curl && \
+#     rm -rf /var/cache/apk/*
+# ENV WAIT_VERSION 2.7.2
+# RUN curl https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait  -o /wait
+# RUN chmod +x /wait
+
+# COPY ./packages/common/ ./packages/common/
+COPY ./packages/wait-for-it.sh /usr/wait-for-it.sh
+# COPY ./wait-for-it.sh usr/wait-for-it.sh
+RUN chmod +x /usr/wait-for-it.sh
+RUN apk add --update bash
+
+# 컨테이너 위치 변경
+WORKDIR /abb/packages/server/

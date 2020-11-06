@@ -1,0 +1,30 @@
+{
+    "private": true,
+    "scripts": {
+        "build:back": "lerna run build --scope={@abb/server,@abb/common}",
+        "build:front": "lerna run build --scope={@abb/web,@abb/controller,@abb/common}",
+        "cleanPackages": "sudo rm -rf node_modules yarn.lock ./packages/common/node_modules ./packages/controller/node_modules ./packages/server/node_modules ./packages/web/node_modules && npx yarn cache clean"
+    },
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
+        "nohoist": [
+            "**/server/graphql"
+        ]  
+    },
+    "name": "abb",
+    "devDependencies": {
+        "lerna": "^3.20.2",
+        "create-react-app": "^3.4.0"
+    },
+    "dependencies": {},
+    
+    "resolutions": {
+        "react": "16.9.0",
+        "react-dom": "16.9.0",
+        "@types/react": "^16.9.34",
+        "@types/react-dom": "^16.9.0",
+        "graphql": "14.7.0"
+    }
+}

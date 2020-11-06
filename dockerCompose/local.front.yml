@@ -1,0 +1,36 @@
+version: "3.6"
+services:
+
+    frontend:
+        container_name: frontend
+        hostname: frontend
+        build:      # --build 옵션에 작동함
+            context: ../
+            dockerfile: ./dockerCompose/Dockerfile.front.local.compose
+        image: kcod/abbfront:latest
+        ports:
+            - 8099:3000
+        networks:
+            - abb-net
+        env_file:
+            - ../.env
+        environment:
+            - CHOKIDAR_USEPOLLING=true  # hot-reloading work
+            - REACT_APP_SERVER_PORT=${REACT_APP_SERVER_PORT}        
+            - REACT_APP_SERVER_URL=${REACT_APP_SERVER_URL}
+        volumes:
+            - /home/ubuntu/work/edboardwsl/:/abb/
+        # volumes:
+        #     - type: bind 
+        #         source: /mnt/c/dev/edboardwsl/
+        #         target: /abb/
+        command:   
+            - /bin/sh
+            - -c 
+            - "yarn start"
+
+# volumes:
+#     rdb-data:
+networks:
+    abb-net:
+        name: abb-net
