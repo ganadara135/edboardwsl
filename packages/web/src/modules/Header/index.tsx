@@ -17,8 +17,11 @@ const Header = () =>
           전체목록
           </Link>
         </Menu.Item>
-        <Menu.SubMenu icon={<EditOutlined />} title="데이터입력">
-          <Menu.ItemGroup title="">
+        <Menu.Item icon={<EditOutlined />} >          
+          <Link to={`/insertData`}>
+            데이터입력
+          </Link>
+          {/* <Menu.ItemGroup title="">
             <Menu.Item key="setting:1">
               <Link to={`/insertyear`}>
                 연도입력
@@ -29,8 +32,8 @@ const Header = () =>
                 월입력
               </Link>
             </Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
+          </Menu.ItemGroup> */}
+        </Menu.Item>
         <Menu.Item key="app" icon={<FolderOpenOutlined />}>
           <Link to={`/createedb`}>
           에너지테이블 생성

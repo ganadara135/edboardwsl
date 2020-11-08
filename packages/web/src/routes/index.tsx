@@ -13,6 +13,7 @@ import { InsertYearConnector } from "../modules/InsertYear/InsertYearConnector";
 import { CreateEDBoardConnector } from "../modules/CreateEDBoard/CreateEDBoardConnector";
 import { ViewListingMNConnector } from "../modules/ViewListingMN/ViewListingMNconnector";
 import { ViewListingConnector } from "../modules/ViewListing/ViewListingconnector";
+import { InsertDataConnector } from "../modules/InsertData/InsertDataConnector";
 import Home  from "../modules/Home";
 import Header from "../modules/Header";
 
@@ -29,6 +30,8 @@ export const Routes = () => (
             <Route exact={true} path="/viewmn" component={ViewListingMNConnector} />
             <Route exact={true} path="/viewraw" component={ViewListingConnector} />
             
+            <Route exact={true} path="/insertData" component={InsertDataConnector}  />
+
             <Route path="/donemsg" component={TextPage} />
             <Route path="/editpage/:m_id/:m_month/:m_goal/:m_description/:y_id/:y_year/:y_goal/:y_description" component={EditYearMonthDetail} />
             {/* <Redirect from={"*"} to={"/"} /> */}
