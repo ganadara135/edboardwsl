@@ -4,7 +4,7 @@ export * from "./modules/InsertMonthController";
 export * from "./modules/ViewListingMNController";
 export * from "./modules/ViewListingController";
 export * from "./modules/ListEDboardController";
-export * from "./modules/ListBoardYearController";
+export * from "./modules/YearListByBoardNameController";
 export * from "./modules/ListYearController";
 export * from "./modules/GetYearController";
 export * from "./modules/EditYearController";

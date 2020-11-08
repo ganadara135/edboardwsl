@@ -13,11 +13,11 @@ type Query {
   monthGoalQuery: [MonthGoal]
   yearGoalQuery: [YearGoal]
   yearGoalDeepQuery: [YearToMonthMN]
-  # listEDboardQuery(): [String]  # 위 방식은 에러 발생
   listEDboardQuery: [String]
   listYearQuery(yearName: Int, boardName: String): [Int]
   viewListing(yearName: Int!, boardName: String!): ListingOrdered
   viewListingMN(yearName: Int!): ListingMN
+  yearListByBoardNameQeury(boardName: String): [Int]
 }
 
 input YearGoalInput {
@@ -63,7 +63,6 @@ type MonthGoal {
   ymmns: [YearToMonthMN!]
 }
 
-# 중요, 객체형이 아닌 순수 데이터로 받기
 scalar raw
 
 type ListingOrdered {

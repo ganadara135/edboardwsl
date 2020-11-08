@@ -322,6 +322,23 @@ export interface ViewListingMNQueryVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: YearListByBoardNameQeury
+// ====================================================
+
+export interface YearListByBoardNameQeury {
+  yearListByBoardNameQeury: (number | null)[] | null;
+}
+
+export interface YearListByBoardNameQeuryVariables {
+  boardName?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

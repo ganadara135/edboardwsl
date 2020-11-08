@@ -6,7 +6,9 @@ import { withFormik,   FormikProps, Field, Form } from 'formik';
 import { InputMonthField } from "../../shared/InputMonthField";
 import { InputField } from "../../shared/InputField";
 import { SelectField } from "../../shared/SelectField";
-import { NormalizedErrorMap, ListBoardYearController } from '@abb/controller';
+import { LabelField } from "../../shared/LabelField";
+// import { NormalizedErrorMap, ListBoardYearController } from '@abb/controller';
+import { NormalizedErrorMap, YearListByBoardNameController } from '@abb/controller';
 import * as Yup from "yup";
 
 
@@ -17,26 +19,28 @@ interface FormValues {  // extends InsertMonthMutationVariables{
   description?: string;
 }
 interface Props {
-    onFinish: () => void;
-    submit: (values: FormValues) => Promise<NormalizedErrorMap | null>;
+  boardName: string;
+  onFinish: () => void;
+  submit: (values: FormValues) => Promise<NormalizedErrorMap | null>;
 }
 class C extends React.PureComponent<FormikProps<FormValues> & Props> {
     
   render() {
-    const {  errors, touched} = this.props;
+    const {  errors, touched, boardName} = this.props;
 
     const { message }: any = errors;
+    console.log("boardName : ", boardName)
     console.log(" errors props : ", errors)
     console.log("this.props: ", this.props);
 
     return (              //  1970  means to request all years
-      <ListBoardYearController yearName={1970} boardName={''}>
-        {(data) => {
+      <YearListByBoardNameController boardName={boardName}>
+        {(data: { loading: any; listingYear: any; }) => {
           if (data.loading) {
             // return <div>...loading</div>;
             return <div style={{ margin: 20, display: "flex", justifyContent: "center" }}>...loading</div>
           }
-          console.log("data.listingBoard : ", data.listingBoard)
+          // console.log("data.listingBoard : ", data.listingBoard)
           console.log("data.listingYear : ", data.listingYear)
           return (
             <Form style={{ display: "flex" }}> 
@@ -50,22 +54,14 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
                 />
                 <Field  
                   name="goal"
-                  label="목표전력"
+                  label="목표값"
                   useNumberComponent={true}
                   component={InputField}
                   suffixIcon={
                     <FireOutlined style={{ margin: 10}}/>
                   }
-                  suffixLabel=" 단위:  kW"
+                  suffixLabel=" 단위: 전력 W, 유체 Nm3"
                 />
-                {/* <ErrorMessage name="yeargoals.year" render={msg => <div style={{ color:'red'}}>{msg}</div>} /> */}
-                {/* <Field  
-                  name="yearName"
-                  label="해당년도"
-                  yearName={new Date().getFullYear()}
-                  pickerVal="year"
-                  component={InputMonthYearField}
-                /> */}
                 <Field 
                   as="select" 
                   name="yearName" 
@@ -76,13 +72,19 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
                   component={SelectField}
                 />
                 <Field 
+                  name="edboardName"
+                  label="에너지명"
+                  component={LabelField}
+                  edValue={boardName}
+                />
+                {/* <Field 
                   as="select" 
                   name="boardName" 
                   label="에너지선택" 
                   placeholder="에너지"
-                  listing={data.listingBoard}
+                  // listing={data.listingBoard}
                   component={SelectField}
-                />
+                /> */}
                 {/* <ErrorMessage name="yeargoals.goal" render={msg => <div style={{ color:'red'}}>{msg}</div>} /> */}
                 <Field  
                   name="description"
@@ -100,7 +102,7 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
               </div>
             </Form>)
         }}
-      </ListBoardYearController>
+      </YearListByBoardNameController>
     );
   }
 }

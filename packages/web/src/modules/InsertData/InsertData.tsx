@@ -18,7 +18,7 @@ export interface ParamValues {
   boardName: string;
 }
 
-export class InsertDataConnector extends React.PureComponent<
+export class InsertData extends React.PureComponent<
 RouteComponentProps<{}>, { selectedBoard: string}
 > {
     constructor(props: any){
@@ -54,12 +54,12 @@ RouteComponentProps<{}>, { selectedBoard: string}
           { this.state.selectedBoard === "" ? [] : 
           <Menu mode="horizontal">
             <Menu.Item key="inputYear" >
-              <Link to={`/insertyear`}>
+              <Link to={`/insertyear/${this.state.selectedBoard}`}>
                 연 데이터 입력 
               </Link>
             </Menu.Item>
             <Menu.Item key="inputMonth" >
-              <Link to={`/insertmonth`}>
+              <Link to={`/insertmonth/${this.state.selectedBoard}`}>
                 월 데이터 입력 
               </Link>
             </Menu.Item>

@@ -57,15 +57,15 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
             <ErrorMessage name="yeargoals.year" render={msg => <div style={{ color:'red'}}>{msg}</div>} />
             <Field  
               name="yeargoals.goal"
-              label="목표전력"
+              label="목표값"
               useNumberComponent={true}
               component={InputField}
               suffixIcon={
                 <FireOutlined style={{ margin: 10}}/>
               }
-              suffixLabel=" 단위:  kW"
+              suffixLabel=" 단위: 전력 W, 유체 Nm3"
             >
-                {/* <FireOutlined />   children 예제 */}
+          
             </Field>
             <ErrorMessage name="yeargoals.goal" render={msg => <div style={{ color:'red'}}>{msg}</div>} />
             <Field  

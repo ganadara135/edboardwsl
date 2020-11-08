@@ -13,7 +13,7 @@ import { InsertYearConnector } from "../modules/InsertYear/InsertYearConnector";
 import { CreateEDBoardConnector } from "../modules/CreateEDBoard/CreateEDBoardConnector";
 import { ViewListingMNConnector } from "../modules/ViewListingMN/ViewListingMNconnector";
 import { ViewListingConnector } from "../modules/ViewListing/ViewListingconnector";
-import { InsertDataConnector } from "../modules/InsertData/InsertDataConnector";
+import { InsertData } from "../modules/InsertData/InsertData";
 import Home  from "../modules/Home";
 import Header from "../modules/Header";
 
@@ -25,12 +25,12 @@ export const Routes = () => (
         {/* <div> <h1>Hello</h1></div>; */}
             <Route exact={true} path="/"  component={Home} />
             <Route exact={true} path="/createedb" component={CreateEDBoardConnector} />
-            <Route exact={true} path="/insertyear" component={InsertYearConnector} />
-            <Route exact={true} path="/insertmonth" component={InsertMonthConnector} />
+            <Route exact={true} path="/insertyear/:boardName" component={InsertYearConnector} />
+            <Route exact={true} path="/insertmonth/:boardName" component={InsertMonthConnector} />
             <Route exact={true} path="/viewmn" component={ViewListingMNConnector} />
             <Route exact={true} path="/viewraw" component={ViewListingConnector} />
             
-            <Route exact={true} path="/insertData" component={InsertDataConnector}  />
+            <Route exact={true} path="/insertData" component={InsertData}  />
 
             <Route path="/donemsg" component={TextPage} />
             <Route path="/editpage/:m_id/:m_month/:m_goal/:m_description/:y_id/:y_year/:y_goal/:y_description" component={EditYearMonthDetail} />
