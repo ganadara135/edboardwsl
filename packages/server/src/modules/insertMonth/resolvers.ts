@@ -1,7 +1,8 @@
 import { ResolverMap } from "../../types/graphql-utils";
+import { EDboard } from "../../entity/EDboard";
 import { MonthGoal } from "../../entity/MonthGoal";
-import { YearGoal}  from "../../entity/YearGoal";
-import { YearToMonthMN} from "../../entity/YearToMonthMN";
+import { YearGoal }  from "../../entity/YearGoal";
+import { YearToMonthMN } from "../../entity/YearToMonthMN";
 
 import { InsertMonthMutationArgs, IErrorReponse} from "../../myTypes";
 
@@ -15,10 +16,22 @@ export const resolvers: ResolverMap = {
             __, // context,
             ___, // info
         ): Promise<IErrorReponse> => {
-            // const {   } = args;
+            
             console.log("args : ", args)
+            const boardChk = await EDboard.findOne(
+                {name: args.edboardName}
+            )
+            console.log('chk boardChk :', boardChk)
+            if(!boardChk){
+                return {
+                    ok: false,
+                    message: "boardName is null or undefined",
+                    path: "args.edboardName"
+                }
+            }
+
             const yearVal = await YearGoal.findOne(
-              {year: args.yearName }
+                {year: args.yearName, edboard: boardChk.id} as any
               // {relations:['yeargoals'],} // defaults is left join
             )
             console.log('chk yearVal :', yearVal)

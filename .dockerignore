@@ -19,6 +19,8 @@
 !./.env.local
 !./.env.prod
 
+!./wait-for-it.sh
+
 # for development
 !./packages/
 !./node_modules/

@@ -13,6 +13,7 @@ import * as Yup from "yup";
 
 
 interface FormValues {  // extends InsertMonthMutationVariables{
+  edboardName: string;
   month: number;
   goal: number;
   yearName: number;
@@ -108,6 +109,7 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
 }
 
 const InsertMonthSchema = Yup.object().shape({
+  
   month: Yup.number().min(0, 'Too Short!').max(12, 'Too Long!').required('Required'),
   goal: Yup.number().min(1, 'Too Short!').max(99999, 'Too Long!').required('Required'),
   yearName: Yup.number().min(2018, 'Too Short!').max(2030, 'Too Long!').required('Required'),
@@ -117,7 +119,7 @@ export const InsertMonthView = withFormik<Props, FormValues>({
     // validateOnChange : false,
     // validateOnBlur: false,
     validationSchema : InsertMonthSchema,
-    mapPropsToValues: () =>  ({ month: 0, goal: 0, yearName: 0, }),
+    mapPropsToValues: () =>  ({ edboardName:'', month: 0, goal: 0, yearName: 0, }),
     handleSubmit: async (values, {props, setErrors}) => {
       console.log("handleSubmit: ", values)
 

@@ -1,8 +1,9 @@
 # prod 용 설치 방법
 1. dockerCompose 폴더 안에서 .env  mysqlDB_cnf  deploy.yml  파일만 필요
-1. 위 3개 파일을 같은 위치에 놓고 실행
-1. rdb volume 설정, mysqlDB_cnf 폴더와 컨테이너 mysql 폴더 연결 설정
+2. 위 3개 파일을 같은 위치에 놓고 실행
+3. rdb volume 설정, mysqlDB_cnf 폴더와 컨테이너 mysql 폴더 연결 설정
 > docker-compose -f deploy.yml up
+4. .env.prod   에서  REACT_APP_SERVER_URL, FRONTEND_HOST  서버환경에 맞게 수정후 이미지 빌드후 배포
 
 # tips
 1.설치 모듈 버전 확인

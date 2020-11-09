@@ -2,7 +2,7 @@ type Mutation {
   createEDBoard(name: String!, description: String!): IErrorReponse
   editYear(y_id: ID!, year: Int, goal: Int, description: String): IErrorReponse
   editMonth(m_id: ID!, month: Int, goal: Int, description: String, y_id: ID, year: Int): IErrorReponse
-  insertMonth(month: Int!, goal: Int!, yearName: Int!, description: String): IErrorReponse
+  insertMonth(edboardName: String!, month: Int!, goal: Int!, yearName: Int!, description: String): IErrorReponse
   insertYear(edboardName: String!, yeargoals: YearGoalInput): IErrorReponse
 }
 

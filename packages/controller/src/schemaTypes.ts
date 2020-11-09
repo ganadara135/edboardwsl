@@ -150,6 +150,7 @@ export interface InsertMonthMutation {
 }
 
 export interface InsertMonthMutationVariables {
+  edboardName: string;
   month: number;
   goal: number;
   yearName: number;

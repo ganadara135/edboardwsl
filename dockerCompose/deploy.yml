@@ -59,8 +59,8 @@ services:
             - ${SERVER_PORT}:${SERVER_PORT}
         networks:
             - abb-net
-        links:
-            - frontend
+        # links:
+        #     - frontend
         env_file:       # Dockerfile  에서 컨테이너에 넣어줌
             - .env
         environment:

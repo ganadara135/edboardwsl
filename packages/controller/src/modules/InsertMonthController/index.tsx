@@ -17,7 +17,7 @@ class C extends React.PureComponent<
 > {
 
     submit = async (values: InsertMonthMutationVariables) => {
-        console.log("cont: ", values);
+        console.log("controller : ", values);
         const {data: {insertMonth}} = await this.props.mutate({
             variables: values
             // variables: {insertGoal: values} as any 
@@ -35,9 +35,9 @@ class C extends React.PureComponent<
 }
 
 const INSERTMONTH_MUTATION = gql`
-    mutation InsertMonthMutation($month: Int!, $goal: Int!, $yearName: Int!, $description: String
+    mutation InsertMonthMutation($edboardName: String!, $month: Int!, $goal: Int!, $yearName: Int!, $description: String
     ){
-        insertMonth(month: $month, goal: $goal, yearName: $yearName, description: $description){
+        insertMonth(edboardName: $edboardName, month: $month, goal: $goal, yearName: $yearName, description: $description){
             ok
             message
             path

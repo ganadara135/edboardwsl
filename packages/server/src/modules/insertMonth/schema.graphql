@@ -1,5 +1,6 @@
 type Mutation {
   insertMonth(
+    edboardName: String!,
     month: Int!,
     goal: Int!,
     yearName: Int!,
