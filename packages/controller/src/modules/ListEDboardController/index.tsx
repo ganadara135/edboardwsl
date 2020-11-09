@@ -18,6 +18,7 @@ export interface WithListEDboard {
 
 interface Props {
   children: (data: WithListEDboard) => JSX.Element | null;
+  // children: (data: WithListEDboard) => any;
 }
 
 export class ListEDboardController extends React.PureComponent<Props> {

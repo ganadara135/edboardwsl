@@ -25,11 +25,15 @@ export class EditYearMonthDetail extends React.PureComponent<
     }
 
     render() {      
-      console.log("match : ", this.props.match);
-      const paramData = this.props.match.params;
+      console.log("match in Detail Page : ", this.props.match);
+      console.log("state : ", this.props.location.state)
+      const paramData = this.props.location.state;
       const {y_id,y_year,y_goal,y_description, m_id, m_month, m_goal, m_description} = paramData as IPropsVal;
-      console.log(paramData);
-      console.log(m_id, y_id, y_goal, m_goal);
+      // const paramData = this.props.match.params;
+      // const {y_id, y_goal, m_id, m_goal, } = paramData as IPropsVal;
+      // const {y_id,y_year,y_goal,y_description, m_id, m_month, m_goal, m_description} = paramData as IPropsVal;
+      // console.log(paramData);
+      console.log(y_id,y_year,y_goal,y_description, m_id, m_month, m_goal, m_description);
 
       return (
         <>

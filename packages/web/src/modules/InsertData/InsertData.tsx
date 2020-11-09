@@ -64,16 +64,7 @@ RouteComponentProps<{}>, { selectedBoard: string}
               </Link>
             </Menu.Item>
           </Menu> }
-          </div> 
-
-          {/* <div>
-          { this.state.selectedBoard === "" ? [] : 
-  
-            <InsertYearController >
-            {({ submit } : any) => <InsertYearView onFinish={this.onFinish} submit={submit} />} 
-            </InsertYearController>
-          }
-          </div> */}
+          </div>
         </div>
         
       );

@@ -28,18 +28,18 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props>{
   // }
   
   render() {
-    console.log("children: ", this.props.children)
+    // console.log("children: ", this.props.children)
     const {  errors, touched} = this.props;
     const { message }: any = errors;
-    console.log(" errors props : ", errors)
-    console.log("this.props: ", this.props);
+    // console.log(" errors props : ", errors)
+    // console.log("this.props: ", this.props);
     return (
       <GetYearController y_id={this.props.children as string}>
         {(data) => {
           if (data.loading) {
             return <div style={{ display: "flex", justifyContent: "center" }}>...loading</div>;
           }
-          console.log("data.getData : ", data.getData)
+          // console.log("data.getData : ", data.getData)
           return (
             // <Form style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}> 
             <Form style={{ margin:'auto', display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", alignContent: "space-between" }}>
@@ -65,14 +65,14 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props>{
                 />
                 <Field  
                   name="goal"
-                  label="목표전력"
+                  label="목표값"
                   useNumberComponent={true}
                   // defaultValue={data.getData?.goal}
                   component={InputField}
                   suffixIcon={
                     <FireOutlined style={{ margin: 10}}/>
                   }
-                  suffixLabel=" 단위:  kW"
+                  suffixLabel=" 단위: 전력 W, 유체 Nm3"
                 />
                 <Field  
                   name="description"

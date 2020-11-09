@@ -28,7 +28,7 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
 
     return (
       <ListEDboardController >
-        {(data) => {
+        {(data: { loading: any; listing: any; }) => {
           if (data.loading) {
             // return <div>...loading</div>;
             return <div style={{ margin: 20, display: "flex", justifyContent: "center" }}>...loading</div>

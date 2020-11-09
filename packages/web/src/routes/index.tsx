@@ -21,8 +21,7 @@ import Header from "../modules/Header";
 export const Routes = () => (
     <BrowserRouter>
         <Header/>
-        <Switch>
-        {/* <div> <h1>Hello</h1></div>; */}
+        <Switch>        
             <Route exact={true} path="/"  component={Home} />
             <Route exact={true} path="/createedb" component={CreateEDBoardConnector} />
             <Route exact={true} path="/insertyear/:boardName" component={InsertYearConnector} />
@@ -33,7 +32,9 @@ export const Routes = () => (
             <Route exact={true} path="/insertData" component={InsertData}  />
 
             <Route path="/donemsg" component={TextPage} />
-            <Route path="/editpage/:m_id/:m_month/:m_goal/:m_description/:y_id/:y_year/:y_goal/:y_description" component={EditYearMonthDetail} />
+        {/* <Link to={`/editpage/${l.m_id}/${l.m_month}/${l.m_goal}/${l.m_description}/${l.y_id}/${l.y_year}/${l.y_goal}/${l.y_description}`}>               */}
+            {/* <Route path="/editpage/:m_id/:m_month/:m_goal/:m_description/:y_id/:y_year/:y_goal/:y_description" component={EditYearMonthDetail} /> */}
+            <Route path="/editpage" component={EditYearMonthDetail} />
             {/* <Redirect from={"*"} to={"/"} /> */}
             {/* <AuthRoute path="/create-listing" component={CreateListingConnector} />
             <AuthRoute path="/delete-demo" component={DemoDelete} /> */}

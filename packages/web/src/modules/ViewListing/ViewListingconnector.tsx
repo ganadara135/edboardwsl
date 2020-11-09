@@ -37,16 +37,9 @@ RouteComponentProps<{}>, {selectedYear: number, selectedBoard: string}
       return (
         <div style={{ display: "flex", alignItems: "center", flexDirection: "column" }}  >
           <div style={{ justifyContent: "center", flexDirection: "column", flexFlow: "row wrap"}}>
-          <ViewListingBoards
-            // onFinish={this.onFinish} 
-            // submit={this.handleYearName}
-            onHandleParam={this.onHandleParam}
-            // handleParam={this.handleParam((this.state.selectedYear, this.state.selectedBoard) as unknown as FormValues)}
-          >
-          </ViewListingBoards>
+            <ViewListingBoards onHandleParam={this.onHandleParam}/>
           </div>
-
-          <div>
+        <div>
           {this.state.selectedYear === undefined || this.state.selectedBoard === undefined ? [] : 
             <ViewListingController  
               yearName={this.state.selectedYear}
@@ -66,20 +59,31 @@ RouteComponentProps<{}>, {selectedYear: number, selectedBoard: string}
                       loading={data.loading}
                       style={{ width: 500 }}
                     >
-                      <Link to={`/editpage/${l.m_id}/${l.m_month}/${l.m_goal}/${l.m_description}/${l.y_id}/${l.y_year}/${l.y_goal}/${l.y_description}`}>  
-                        <Card.Meta title={l.y_year + '년  ' + (l.m_month+1) + '월'}  description={
-                          "연간전력목표: " + l.y_goal
-                          // l.m_myTimestamp
-                        }>
+                      {/* <Link to={`/editpage/${l.m_id}/${l.m_month}/${l.m_goal}/${l.m_description === null ? " " : l.m_description}/${l.y_id}/${l.y_year}/${l.y_goal}/${l.y_description === null ? " " : l.y_description}`}> */}
+                    <Link to={{ pathname : `/editpage`,
+                                state : {
+                                  m_id : l.m_id,
+                                  m_month : l.m_month,
+                                  m_goal : l.m_goal,
+                                  m_description : l.m_description,
+                                  y_id : l.y_id,
+                                  y_year : l.y_year,
+                                  y_goal : l.y_goal,
+                                  y_description : l.y_description
+                                }
+                              }}
+                    >
+                        <Card.Meta title={l.y_year + '년  ' + (l.m_month+1) + '월'}  
+                          description={"연간목표값: " + l.y_goal}>
                         </Card.Meta>
-                      {/* <Typography.Text type="secondary"> 연간 전력목표: {l.y_goal}</Typography.Text> */}
+                        {/* <Typography.Text type="secondary"> 연간 전력목표: {l.y_goal}</Typography.Text> */}
                         
-                        월전력목표: {l.m_goal} <br/>
+                        월목표값: {l.m_goal} <br/>
                         해당월설명: {l.m_description} <br/>
                         연간 설명: {l.y_description} <br/>
                         mn  설명: {l.mn_description} <br/> 
-                          {/* <Button type="primary"><Link to={`/listing/${l?.id}-mm`}>수정</Link></Button> */}                      
-                      </Link>
+                        {/* <Button type="primary"><Link to={`/listing/${l?.id}-mm`}>수정</Link></Button> */}                      
+                    </Link>
                     </Card>
                   )
                 }
