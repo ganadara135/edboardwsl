@@ -4,6 +4,7 @@
 3. rdb volume 설정, mysqlDB_cnf 폴더와 컨테이너 mysql 폴더 연결 설정
 > docker-compose -f deploy.yml up
 4. .env.prod   에서  REACT_APP_SERVER_URL, FRONTEND_HOST  서버환경에 맞게 수정후 이미지 빌드후 배포
+5. 4번에서 설명풀이 : docker 브릿지 아이피로 변경?
 
 # tips
 1.설치 모듈 버전 확인
@@ -13,6 +14,11 @@
 > npm, yarn 에서 2곳에서 조사후에 npm 에서 중복된 버전 제거
 3. wait-for-it.sh 이 docker build 에서 복사가 안돼서 packages 폴더에서 옮겨서 복사함
 4. FRONTEND_HOST 는 NGINX 설치된 곳, REACT_APP_SERVER_URL 는 apollo server 설치 위치
+6. 월간전력 쿼리문  
+SELECT myTimestamp, M.goal from edboards ED, YearGoals Y, YearToMonthMNs MN, MonthGoals M
+WHERE ED.id = Y.edboardId AND ED.name="전력" 
+AND MN.ygidId=Y.edboardId AND MN.mgidId=M.id;
+ 
 
 # yarn 
 1. yarn version 1.22.4 에서 개발됨
